@@ -9,8 +9,6 @@ import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -33,13 +31,7 @@ class NeoWebService {
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
 
-    fun getAsteroids(): Call<String> {
-        val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
-        val startDate  = dateFormat.format(calendar.time)
-        calendar.add(Calendar.DAY_OF_YEAR, Constants.DEFAULT_END_DATE_DAYS)
-        val endDate  = dateFormat.format(calendar.time)
-
+    fun getAsteroids(startDate: String, endDate: String): Call<String> {
         val retrofit = retrofit.create(NeoWebServiceInterface::class.java)
         return retrofit.getAsteroids(
             startDate,

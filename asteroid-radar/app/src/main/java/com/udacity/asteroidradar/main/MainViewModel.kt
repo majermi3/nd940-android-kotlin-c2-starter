@@ -1,35 +1,36 @@
 package com.udacity.asteroidradar.main
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.udacity.asteroidradar.Asteroid
+import android.app.Application
+import androidx.lifecycle.*
+import com.udacity.asteroidradar.database.model.Asteroid
+import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.api.NeoWebService
-import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
+import com.udacity.asteroidradar.database.AsteroidDatabase
+import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val neoWebService = NeoWebService()
-    val asteroids = MutableLiveData<List<Asteroid>>()
+
+    private val database = AsteroidDatabase.getInstance(application)
+    private val asteroidRepository = AsteroidRepository(database)
+
+    private val _asteroids = asteroidRepository.asteroids
+    val asteroids: LiveData<List<Asteroid>>
+        get() = _asteroids
 
     init {
-        viewModelScope.launch {
-            neoWebService.getAsteroids().enqueue(object : Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    val jsonResult = JSONObject(response.body() ?: "")
-                    asteroids.value = parseAsteroidsJsonResult(jsonResult)
-                }
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+        val startDate  = dateFormat.format(calendar.time)
+        calendar.add(Calendar.DAY_OF_YEAR, Constants.DEFAULT_END_DATE_DAYS)
+        val endDate  = dateFormat.format(calendar.time)
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Log.i("getAsteroids", t.message.toString())
-                }
-            })
+        viewModelScope.launch {
+            asteroidRepository.refreshAsteroids(startDate, endDate)
         }
     }
 
