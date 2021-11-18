@@ -4,16 +4,18 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.database.model.Asteroid
 import com.udacity.asteroidradar.Constants
-import com.udacity.asteroidradar.api.NeoWebService
+import com.udacity.asteroidradar.PictureOfDay
+import com.udacity.asteroidradar.api.NasaWebService
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
+import retrofit2.awaitResponse
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val neoWebService = NeoWebService()
+    private val nasaWebService = NasaWebService()
 
     private val database = AsteroidDatabase.getInstance(application)
     private val asteroidRepository = AsteroidRepository(database)
@@ -26,6 +28,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val navigateToAsteroidDetail: LiveData<Asteroid>
         get() = _navigateToAsteroidDetail
 
+    private val _pictureOfDay = MutableLiveData<PictureOfDay?>()
+    val pictureOfDay: LiveData<PictureOfDay?>
+        get() = _pictureOfDay
+
     init {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
@@ -35,6 +41,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
         viewModelScope.launch {
             asteroidRepository.refreshAsteroids(startDate, endDate)
+            _pictureOfDay.value = nasaWebService.getImageOfDay().awaitResponse().body()
         }
     }
 

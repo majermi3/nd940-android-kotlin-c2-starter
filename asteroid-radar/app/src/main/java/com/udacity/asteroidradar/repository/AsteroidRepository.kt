@@ -2,7 +2,7 @@ package com.udacity.asteroidradar.repository
 
 import androidx.lifecycle.LiveData
 import com.udacity.asteroidradar.database.model.Asteroid
-import com.udacity.asteroidradar.api.NeoWebService
+import com.udacity.asteroidradar.api.NasaWebService
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ class AsteroidRepository(private val asteroidDatabase: AsteroidDatabase) {
      */
     suspend fun refreshAsteroids(startDate: String, endDate: String) {
         withContext(Dispatchers.IO) {
-            val response = NeoWebService().getAsteroids(startDate, endDate).awaitResponse()
+            val response = NasaWebService().getAsteroids(startDate, endDate).awaitResponse()
             val jsonResult = JSONObject(response.body() ?: "")
             val asteroids = parseAsteroidsJsonResult(jsonResult)
 
