@@ -45,6 +45,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/subtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/close_approach_data_title"
@@ -74,6 +75,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            style="@style/subtitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/absolute_magnitude_title"
@@ -99,6 +101,7 @@
                 </LinearLayout>
 
                 <TextView
+                    style="@style/subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -115,6 +118,7 @@
                     tools:text="0.82 km" />
 
                 <TextView
+                    style="@style/subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -131,6 +135,7 @@
                     tools:text="11.9 km/s" />
 
                 <TextView
+                    style="@style/subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
