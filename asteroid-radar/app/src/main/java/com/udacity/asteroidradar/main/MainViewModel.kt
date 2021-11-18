@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.database.model.Asteroid
 import com.udacity.asteroidradar.Constants
-import com.udacity.asteroidradar.PictureOfDay
+import com.udacity.asteroidradar.dto.PictureOfDay
 import com.udacity.asteroidradar.api.NasaWebService
 import com.udacity.asteroidradar.database.AsteroidDatabase
-import com.udacity.asteroidradar.repository.AsteroidRepository
+import com.udacity.asteroidradar.database.repository.AsteroidRepository
 import kotlinx.coroutines.launch
 import retrofit2.awaitResponse
 import java.text.SimpleDateFormat
