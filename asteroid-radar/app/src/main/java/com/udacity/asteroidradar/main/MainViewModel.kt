@@ -22,6 +22,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val asteroids: LiveData<List<Asteroid>>
         get() = _asteroids
 
+    private val _navigateToAsteroidDetail = MutableLiveData<Asteroid>()
+    val navigateToAsteroidDetail: LiveData<Asteroid>
+        get() = _navigateToAsteroidDetail
+
     init {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
@@ -34,4 +38,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun onNavigateToAsteroidDetail(asteroid: Asteroid) {
+        _navigateToAsteroidDetail.value = asteroid
+    }
+
+    fun navigatingToAsteroidDetailDone() {
+        _navigateToAsteroidDetail.value = null
+    }
 }

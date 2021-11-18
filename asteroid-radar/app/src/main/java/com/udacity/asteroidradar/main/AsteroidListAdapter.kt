@@ -9,20 +9,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.database.model.Asteroid
 import com.udacity.asteroidradar.databinding.ListItemAsteroidBinding
 
-class AsteroidListAdapter: ListAdapter<Asteroid, AsteroidListAdapter.ViewHolder>(AsteroidDiffCallback()) {
+class AsteroidListAdapter(val clickListener: AsteroidClickListener): ListAdapter<Asteroid, AsteroidListAdapter.ViewHolder>(AsteroidDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
     class ViewHolder private constructor(val binding: ListItemAsteroidBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Asteroid) {
+        fun bind(item: Asteroid, clickListener: AsteroidClickListener) {
             binding.asteroid = item
+            binding.clickListener = clickListener
             if (item.isPotentiallyHazardous) {
                 binding.asteroidStatusNormal.visibility = View.GONE
                 binding.asteroidStatusPotentiallyHazardous.visibility = View.VISIBLE
@@ -53,5 +54,9 @@ class AsteroidListAdapter: ListAdapter<Asteroid, AsteroidListAdapter.ViewHolder>
         override fun areContentsTheSame(oldItem: Asteroid, newItem: Asteroid): Boolean {
             return oldItem == newItem
         }
+    }
+
+    class AsteroidClickListener(val clickListener: (asteroid: Asteroid) -> Unit) {
+        fun onClick(asteroid: Asteroid) = clickListener(asteroid)
     }
 }
