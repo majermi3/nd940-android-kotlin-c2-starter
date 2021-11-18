@@ -12,24 +12,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@color/app_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_medium">
 
         <TextView
             android:id="@+id/asteroid_codename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{asteroid.codename}"
-            android:textColor="@color/default_text_color"
-            tools:text="@string/asteroid_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/asteroid_name"
+            style="@style/subtitle" />
 
         <TextView
             android:id="@+id/asteroid_close_approach_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{asteroid.closeApproachDate}"
-            android:textColor="@color/default_text_color"
+            android:textColor="@color/text_grey"
             tools:text="@string/asteroid_approach_date"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +44,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_status_normal"
-            tools:srcCompat="@drawable/ic_status_normal" />
+            tools:srcCompat="@drawable/ic_status_normal"
+            android:contentDescription="@string/status_normal" />
 
         <ImageView
             android:id="@+id/asteroid_status_potentially_hazardous"
@@ -54,7 +56,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_status_potentially_hazardous"
-            tools:srcCompat="@drawable/ic_status_potentially_hazardous" />
+            tools:srcCompat="@drawable/ic_status_potentially_hazardous"
+            android:contentDescription="@string/status_potentially_hazardous" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

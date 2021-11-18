@@ -21,4 +21,6 @@
     <string name="nasa_picture_of_day_content_description_format">NASA\'s picture of day: %s</string>
     <string name="asteroid_name">Asteroid name</string>
     <string name="asteroid_approach_date">Approach date</string>
+    <string name="status_normal">Normal asteroid</string>
+    <string name="status_potentially_hazardous">Potentially hazardous asteroid</string>
 </resources>
