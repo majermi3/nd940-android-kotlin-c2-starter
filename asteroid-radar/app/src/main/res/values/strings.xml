@@ -23,4 +23,7 @@
     <string name="asteroid_approach_date">Approach date</string>
     <string name="status_normal">Normal asteroid</string>
     <string name="status_potentially_hazardous">Potentially hazardous asteroid</string>
+    <string name="image_of_non_hazardous_asteroid">Image of non hazardous asteroid</string>
+    <string name="image_of_hazardous_asteroid">Image of hazardous asteroid</string>
+    <string name="info_icon">Info icon</string>
 </resources>
