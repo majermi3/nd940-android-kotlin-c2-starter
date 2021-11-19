@@ -11,6 +11,7 @@ import com.udacity.asteroidradar.dto.PictureOfDay
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.utility.SharedPreferencesUtility
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
+import timber.log.Timber
 
 class MainFragment : Fragment() {
 
@@ -34,7 +35,9 @@ class MainFragment : Fragment() {
         binding.asteroidRecycler.adapter = adapter
 
         viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroids ->
-            asteroids?.let {
+            if (asteroids.isEmpty()) {
+                viewModel.loadData()
+            } else {
                 adapter.submitList(asteroids)
             }
         })

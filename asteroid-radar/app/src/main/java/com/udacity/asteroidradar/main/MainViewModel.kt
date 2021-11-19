@@ -32,7 +32,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val pictureOfDay: LiveData<PictureOfDay?>
         get() = _pictureOfDay
 
-    init {
+    fun loadData() {
         viewModelScope.launch {
             asteroidRepository.refreshAsteroids()
             _pictureOfDay.value = nasaWebService.getImageOfDay().awaitResponse().body()
