@@ -11,7 +11,6 @@ import com.udacity.asteroidradar.dto.PictureOfDay
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.utility.SharedPreferencesUtility
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
-import timber.log.Timber
 
 class MainFragment : Fragment() {
 
@@ -28,6 +27,7 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
+        binding.statusLoadingWheel.visibility = View.VISIBLE
 
         val adapter =  AsteroidListAdapter(AsteroidListAdapter.AsteroidClickListener {
             viewModel.onNavigateToAsteroidDetail(it)
@@ -35,6 +35,7 @@ class MainFragment : Fragment() {
         binding.asteroidRecycler.adapter = adapter
 
         viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroids ->
+            binding.statusLoadingWheel.visibility = View.GONE
             if (asteroids.isEmpty()) {
                 viewModel.loadData()
             } else {
