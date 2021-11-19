@@ -1,6 +1,5 @@
 package com.udacity.asteroidradar.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -10,15 +9,10 @@ import androidx.navigation.fragment.findNavController
 import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.dto.PictureOfDay
 import com.udacity.asteroidradar.R
+import com.udacity.asteroidradar.utility.SharedPreferencesUtility
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
-
-    companion object {
-        private const val PREFERENCES_URL = "picture_of_day_url"
-        private const val PREFERENCES_TITLE = "picture_of_day_title"
-        private const val PREFERENCES_MEDIA_TYPE = "picture_of_day_media_type"
-    }
 
     lateinit var binding: FragmentMainBinding
 
@@ -64,14 +58,14 @@ class MainFragment : Fragment() {
      * In a case that the worker did not run yet, we want to show a picture
      */
     private fun loadPictureOfDay() {
-        val existingPictureOfDay = getPictureOfDayFromPreferences()
+        val existingPictureOfDay = SharedPreferencesUtility.getPictureOfDayFromPreferences(requireContext())
         if (existingPictureOfDay != null) {
             setPictureOfDay(existingPictureOfDay)
         } else {
             viewModel.pictureOfDay.observe(viewLifecycleOwner, Observer { pictureOfDay ->
                 pictureOfDay?.let {
                     setPictureOfDay(pictureOfDay)
-                    savePictureOfDayInPreferences(pictureOfDay)
+                    SharedPreferencesUtility.savePictureOfDayInPreferences(requireContext(), pictureOfDay)
                 }
             })
         }
@@ -83,29 +77,6 @@ class MainFragment : Fragment() {
             .placeholder(R.drawable.placeholder_picture_of_day)
             .error(R.drawable.placeholder_picture_of_day)
             .into(binding.activityMainImageOfTheDay)
-    }
-
-    private fun getPictureOfDayFromPreferences(): PictureOfDay? {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val pictureUrl = sharedPref?.getString(PREFERENCES_URL, null)
-        val pictureTitle = sharedPref?.getString(PREFERENCES_TITLE, null)
-        val pictureMediaType = sharedPref?.getString(PREFERENCES_MEDIA_TYPE, null)
-
-        return if(pictureUrl != null && pictureTitle != null && pictureMediaType != null) {
-            PictureOfDay(pictureMediaType, pictureTitle, pictureUrl)
-        } else {
-            null
-        }
-    }
-
-    private fun savePictureOfDayInPreferences(pictureOfDay: PictureOfDay) {
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        with (sharedPref.edit()) {
-            putString(PREFERENCES_URL, pictureOfDay.url)
-            putString(PREFERENCES_TITLE, pictureOfDay.title)
-            putString(PREFERENCES_MEDIA_TYPE, pictureOfDay.mediaType)
-            apply()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

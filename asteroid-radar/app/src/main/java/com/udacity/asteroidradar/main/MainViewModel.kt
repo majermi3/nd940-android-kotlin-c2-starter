@@ -33,14 +33,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         get() = _pictureOfDay
 
     init {
-        val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
-        val startDate  = dateFormat.format(calendar.time)
-        calendar.add(Calendar.DAY_OF_YEAR, Constants.DEFAULT_END_DATE_DAYS)
-        val endDate  = dateFormat.format(calendar.time)
-
         viewModelScope.launch {
-            asteroidRepository.refreshAsteroids(startDate, endDate)
+            asteroidRepository.refreshAsteroids()
             _pictureOfDay.value = nasaWebService.getImageOfDay().awaitResponse().body()
         }
     }
