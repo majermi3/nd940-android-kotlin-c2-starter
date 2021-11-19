@@ -29,17 +29,19 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
         binding.statusLoadingWheel.visibility = View.VISIBLE
 
-        val adapter =  AsteroidListAdapter(AsteroidListAdapter.AsteroidClickListener {
+        val adapter = AsteroidListAdapter(AsteroidListAdapter.AsteroidClickListener {
             viewModel.onNavigateToAsteroidDetail(it)
         })
         binding.asteroidRecycler.adapter = adapter
 
         viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroids ->
-            binding.statusLoadingWheel.visibility = View.GONE
             if (asteroids.isEmpty()) {
-                viewModel.loadData()
+                viewModel.loadData {
+                    binding.statusLoadingWheel.visibility = View.GONE
+                }
             } else {
                 adapter.submitList(asteroids)
+                binding.statusLoadingWheel.visibility = View.GONE
             }
         })
         viewModel.navigateToAsteroidDetail.observe(viewLifecycleOwner, Observer { asteroid ->
@@ -49,6 +51,11 @@ class MainFragment : Fragment() {
                         .actionShowDetail(asteroid)
                 )
                 viewModel.navigatingToAsteroidDetailDone()
+            }
+        })
+        viewModel.networkError.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.networkError.visibility = View.VISIBLE
             }
         })
 

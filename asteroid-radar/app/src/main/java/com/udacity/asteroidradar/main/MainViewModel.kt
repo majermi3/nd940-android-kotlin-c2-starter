@@ -9,7 +9,9 @@ import com.udacity.asteroidradar.api.NasaWebService
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.repository.AsteroidRepository
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import retrofit2.awaitResponse
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,10 +34,24 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val pictureOfDay: LiveData<PictureOfDay?>
         get() = _pictureOfDay
 
-    fun loadData() {
+    private val _networkError = MutableLiveData<Boolean>()
+    val networkError: LiveData<Boolean>
+        get() = _networkError
+
+    init {
+        _networkError.value = false
+    }
+
+    fun loadData(callback: () -> Unit) {
         viewModelScope.launch {
-            asteroidRepository.refreshAsteroids()
-            _pictureOfDay.value = nasaWebService.getImageOfDay().awaitResponse().body()
+            try {
+                asteroidRepository.refreshAsteroids()
+                _pictureOfDay.value = nasaWebService.getImageOfDay().awaitResponse().body()
+                callback()
+            } catch (ex: Exception) {
+                _networkError.value = true
+                callback()
+            }
         }
     }
 
