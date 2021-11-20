@@ -61,6 +61,19 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun reloadAsteroids(callback: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                asteroidRepository.refreshAsteroids()
+                asteroidRepository.removeOldAsteroids()
+                callback()
+            } catch (ex: Exception) {
+                _networkError.value = true
+                callback()
+            }
+        }
+    }
+
     fun onNavigateToAsteroidDetail(asteroid: Asteroid) {
         _navigateToAsteroidDetail.value = asteroid
     }

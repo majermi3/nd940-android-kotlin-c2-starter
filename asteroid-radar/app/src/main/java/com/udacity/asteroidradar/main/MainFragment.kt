@@ -25,9 +25,13 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
-
         binding.viewModel = viewModel
-        showSpinner()
+
+        binding.pullToRefresh.setOnRefreshListener {
+            viewModel.reloadAsteroids {
+                binding.pullToRefresh.isRefreshing = false
+            }
+        }
 
         val adapter = AsteroidListAdapter(AsteroidListAdapter.AsteroidClickListener {
             viewModel.onNavigateToAsteroidDetail(it)
@@ -68,6 +72,7 @@ class MainFragment : Fragment() {
             }
         })
 
+        showSpinner()
         loadPictureOfDay()
         setHasOptionsMenu(true)
 
