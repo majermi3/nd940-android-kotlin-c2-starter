@@ -9,9 +9,7 @@ import com.udacity.asteroidradar.api.NasaWebService
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.repository.AsteroidRepository
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import retrofit2.awaitResponse
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,6 +23,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _asteroids = asteroidRepository.asteroids
     val asteroids: LiveData<List<Asteroid>>
         get() = _asteroids
+
+    /**
+     * Holds a today's date. If set, asteroids will be filtered by it
+     */
+    private val _showTodayAsteroids = MutableLiveData<String>()
+    val showTodayAsteroids: LiveData<String>
+        get() = _showTodayAsteroids
+
 
     private val _navigateToAsteroidDetail = MutableLiveData<Asteroid>()
     val navigateToAsteroidDetail: LiveData<Asteroid>
@@ -61,5 +67,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun navigatingToAsteroidDetailDone() {
         _navigateToAsteroidDetail.value = null
+    }
+
+    fun showAllAsteroids() {
+        _showTodayAsteroids.value = null
+    }
+
+    fun setShowTodayAsteroids() {
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
+
+        _showTodayAsteroids.value = dateFormat.format(calendar.time)
     }
 }

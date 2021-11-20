@@ -27,21 +27,30 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
-        binding.statusLoadingWheel.visibility = View.VISIBLE
+        showSpinner()
 
         val adapter = AsteroidListAdapter(AsteroidListAdapter.AsteroidClickListener {
             viewModel.onNavigateToAsteroidDetail(it)
         })
         binding.asteroidRecycler.adapter = adapter
 
+        viewModel.showTodayAsteroids.observe(viewLifecycleOwner, Observer { today ->
+            showSpinner()
+            if (today == null) {
+                adapter.submitList(viewModel.asteroids.value)
+            } else {
+                adapter.submitList(viewModel.asteroids.value?.filter { it.closeApproachDate == today })
+            }
+            hideSpinner()
+        })
         viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroids ->
             if (asteroids.isEmpty()) {
                 viewModel.loadData {
-                    binding.statusLoadingWheel.visibility = View.GONE
+                    hideSpinner()
                 }
             } else {
                 adapter.submitList(asteroids)
-                binding.statusLoadingWheel.visibility = View.GONE
+                hideSpinner()
             }
         })
         viewModel.navigateToAsteroidDetail.observe(viewLifecycleOwner, Observer { asteroid ->
@@ -96,6 +105,22 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.show_all_menu -> {
+                viewModel.showAllAsteroids()
+            }
+            R.id.show_today_menu -> {
+                viewModel.setShowTodayAsteroids()
+            }
+        }
         return true
+    }
+
+    private fun showSpinner() {
+        binding.statusLoadingWheel.visibility = View.VISIBLE
+    }
+
+    private fun hideSpinner() {
+        binding.statusLoadingWheel.visibility = View.GONE
     }
 }
