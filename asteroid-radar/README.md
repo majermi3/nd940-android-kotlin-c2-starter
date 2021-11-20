@@ -1,9 +1,14 @@
-# Purpose of this Folder
+# Asteroid Radar
 
-This folder should contain the scaffolded project files to get a student started on their project. This repo will be added to the Classroom for students to use, so please do not have any solutions in this folder.
+## API Key configuration
 
-## Note: Android Kotlin Gradle Update
-Use the updated Gradle version in the `~/gradle/wrapper/gradle-wrapper.properties` file:
+Create a kotlin file API.kt in the `src/main/java/com/udacity/asteroidradar` folder and change the
+"api-key" to your value
+
 ```
-distributionUrl = https\://services.gradle.org/distributions/gradle-6.1.1-all.zip
+package com.udacity.asteroidradar
+
+object API {
+    const val KEY = "api-key"
+}
 ```
