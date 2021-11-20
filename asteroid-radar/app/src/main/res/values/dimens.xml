@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="padding_medium">16dp</dimen>
     <dimen name="text_size_subtitle">20sp</dimen>
+    <dimen name="picture_of_day_hight">220dp</dimen>
+    <dimen name="picture_of_day_text_size">20sp</dimen>
+    <dimen name="network_error_image_width">60dp</dimen>
+    <dimen name="network_error_image_height">60dp</dimen>
+
+    <dimen name="padding_medium">16dp</dimen>
+
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">32dp</dimen>
 </resources>

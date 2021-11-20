@@ -7,7 +7,6 @@
         <variable
             name="viewModel"
             type="com.udacity.asteroidradar.main.MainViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +17,7 @@
         <FrameLayout
             android:id="@+id/activity_main_image_of_the_day_layout"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="@dimen/picture_of_day_hight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,10 +35,10 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:padding="@dimen/padding_medium"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="@dimen/picture_of_day_text_size"
                 android:layout_gravity="bottom"
                 android:background="#55010613"
                 android:text="@string/image_of_the_day" />
@@ -59,6 +58,7 @@
                 android:id="@+id/asteroid_recycler"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/margin_large"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/list_item_asteroid" >
 
@@ -77,8 +77,8 @@
 
         <ImageView
             android:id="@+id/networkError"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/network_error_image_width"
+            android:layout_height="@dimen/network_error_image_height"
             android:contentDescription="@string/network_error"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -87,5 +87,6 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_main_image_of_the_day_layout"
             app:srcCompat="@drawable/ic_baseline_cloud_off_24"
             app:tint="@color/default_text_color" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

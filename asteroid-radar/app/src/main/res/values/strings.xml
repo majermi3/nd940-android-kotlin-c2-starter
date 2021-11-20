@@ -27,4 +27,9 @@
     <string name="image_of_hazardous_asteroid">Image of hazardous asteroid</string>
     <string name="info_icon">Info icon</string>
     <string name="network_error">Network error</string>
+    <string name="estimated_diameter_default_text">0.82 km</string>
+    <string name="relative_velocity_default_text">11.9 km/s</string>
+    <string name="distance_from_earth_default_value">0.0924 au</string>
+    <string name="absolute_magnitude_default_value">25.126 au</string>
+    <string name="close_approach_date_default_value">2020-02-01</string>
 </resources>
