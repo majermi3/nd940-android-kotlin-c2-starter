@@ -70,6 +70,9 @@ class MainFragment : Fragment() {
             if (it) {
                 binding.networkError.visibility = View.VISIBLE
                 binding.asteroidRecycler.visibility = View.GONE
+            } else {
+                binding.networkError.visibility = View.GONE
+                binding.asteroidRecycler.visibility = View.VISIBLE
             }
         })
 

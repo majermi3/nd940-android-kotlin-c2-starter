@@ -51,6 +51,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun loadData(callback: () -> Unit) {
         viewModelScope.launch {
             try {
+                _networkError.value = false
                 asteroidRepository.refreshAsteroids()
                 _pictureOfDay.value = nasaWebService.getImageOfDay().awaitResponse().body()
                 callback()
@@ -64,6 +65,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun reloadAsteroids(callback: () -> Unit) {
         viewModelScope.launch {
             try {
+                _networkError.value = false
                 asteroidRepository.refreshAsteroids()
                 asteroidRepository.removeOldAsteroids()
                 callback()
