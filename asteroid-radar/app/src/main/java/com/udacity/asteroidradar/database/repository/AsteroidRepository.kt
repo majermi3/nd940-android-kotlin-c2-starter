@@ -6,6 +6,7 @@ import com.udacity.asteroidradar.database.model.Asteroid
 import com.udacity.asteroidradar.api.NasaWebService
 import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
+import com.udacity.asteroidradar.utility.DateUtility
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -15,7 +16,9 @@ import java.util.*
 
 class AsteroidRepository(private val asteroidDatabase: AsteroidDatabase) {
 
-    val asteroids: LiveData<List<Asteroid>> = asteroidDatabase.asteroidDao.getAll()
+    val asteroids: LiveData<List<Asteroid>> = asteroidDatabase.asteroidDao.getUpcoming(
+        DateUtility.getTodayFormatted()
+    )
 
     /**
      * Fetches new asteroids from NeoWS API and persists them in the database
@@ -43,9 +46,7 @@ class AsteroidRepository(private val asteroidDatabase: AsteroidDatabase) {
     }
 
     suspend fun removeOldAsteroids() {
-        val calendar = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
-        val endDate  = dateFormat.format(calendar.time)
+        val endDate = DateUtility.getTodayFormatted()
 
         withContext(Dispatchers.IO) {
             asteroidDatabase.asteroidDao.remove(endDate)
