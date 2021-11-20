@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.main
 
+import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.*
 import com.udacity.asteroidradar.database.model.Asteroid
@@ -88,6 +89,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         _showTodayAsteroids.value = null
     }
 
+    @SuppressLint("WeekBasedYear")
     fun setShowTodayAsteroids() {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())

@@ -40,7 +40,7 @@
                 android:textStyle="bold"
                 android:textSize="@dimen/picture_of_day_text_size"
                 android:layout_gravity="bottom"
-                android:background="#55010613"
+                android:background="@color/medium_gray"
                 android:text="@string/image_of_the_day" />
         </FrameLayout>
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

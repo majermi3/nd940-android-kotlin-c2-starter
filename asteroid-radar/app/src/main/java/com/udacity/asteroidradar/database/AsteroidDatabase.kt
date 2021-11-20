@@ -14,6 +14,8 @@ abstract class AsteroidDatabase : RoomDatabase() {
 
     companion object {
 
+        const val DB_NAME = "asteroids"
+
         @Volatile
         private lateinit var INSTANCE: AsteroidDatabase
 
@@ -23,7 +25,7 @@ abstract class AsteroidDatabase : RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         AsteroidDatabase::class.java,
-                        "asteroids"
+                        DB_NAME
                     ).build()
                 }
             }

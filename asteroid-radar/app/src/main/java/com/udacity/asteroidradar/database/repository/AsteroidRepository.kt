@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.database.repository
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.database.model.Asteroid
@@ -23,6 +24,7 @@ class AsteroidRepository(private val asteroidDatabase: AsteroidDatabase) {
     /**
      * Fetches new asteroids from NeoWS API and persists them in the database
      */
+    @SuppressLint("WeekBasedYear")
     suspend fun refreshAsteroids() {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())

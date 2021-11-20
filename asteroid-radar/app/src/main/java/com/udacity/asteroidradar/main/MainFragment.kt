@@ -22,7 +22,7 @@ class MainFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -38,7 +38,7 @@ class MainFragment : Fragment() {
         })
         binding.asteroidRecycler.adapter = adapter
 
-        viewModel.showTodayAsteroids.observe(viewLifecycleOwner, Observer { today ->
+        viewModel.showTodayAsteroids.observe(viewLifecycleOwner, { today ->
             showSpinner()
             if (today == null) {
                 adapter.submitList(viewModel.asteroids.value)
@@ -47,7 +47,7 @@ class MainFragment : Fragment() {
             }
             hideSpinner()
         })
-        viewModel.asteroids.observe(viewLifecycleOwner, Observer { asteroids ->
+        viewModel.asteroids.observe(viewLifecycleOwner, { asteroids ->
             if (asteroids.isEmpty()) {
                 viewModel.loadData {
                     hideSpinner()
@@ -57,7 +57,7 @@ class MainFragment : Fragment() {
                 hideSpinner()
             }
         })
-        viewModel.navigateToAsteroidDetail.observe(viewLifecycleOwner, Observer { asteroid ->
+        viewModel.navigateToAsteroidDetail.observe(viewLifecycleOwner, { asteroid ->
             asteroid?.let {
                 this.findNavController().navigate(
                     MainFragmentDirections
@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
                 viewModel.navigatingToAsteroidDetailDone()
             }
         })
-        viewModel.networkError.observe(viewLifecycleOwner, Observer {
+        viewModel.networkError.observe(viewLifecycleOwner, {
             if (it) {
                 binding.networkError.visibility = View.VISIBLE
                 binding.asteroidRecycler.visibility = View.GONE
@@ -91,7 +91,7 @@ class MainFragment : Fragment() {
         if (existingPictureOfDay != null) {
             setPictureOfDay(existingPictureOfDay)
         } else {
-            viewModel.pictureOfDay.observe(viewLifecycleOwner, Observer { pictureOfDay ->
+            viewModel.pictureOfDay.observe(viewLifecycleOwner, { pictureOfDay ->
                 pictureOfDay?.let {
                     setPictureOfDay(pictureOfDay)
                     SharedPreferencesUtility.savePictureOfDayInPreferences(requireContext(), pictureOfDay)

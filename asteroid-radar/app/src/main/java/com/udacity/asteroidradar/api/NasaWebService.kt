@@ -13,7 +13,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
-
 class NasaWebService {
 
     private var okHttpClient = OkHttpClient.Builder()
@@ -25,11 +24,7 @@ class NasaWebService {
     fun getAsteroids(startDate: String, endDate: String): Call<String> {
         val webService = getRetrofit().create(NasaWebServiceInterface::class.java)
 
-        return webService.getAsteroids(
-            startDate,
-            endDate,
-            API.KEY
-        )
+        return webService.getAsteroids(startDate, endDate, API.KEY)
     }
 
     fun getImageOfDay(): Call<PictureOfDay> {
