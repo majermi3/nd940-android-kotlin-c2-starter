@@ -69,6 +69,7 @@ class MainFragment : Fragment() {
         viewModel.networkError.observe(viewLifecycleOwner, Observer {
             if (it) {
                 binding.networkError.visibility = View.VISIBLE
+                binding.asteroidRecycler.visibility = View.GONE
             }
         })
 
