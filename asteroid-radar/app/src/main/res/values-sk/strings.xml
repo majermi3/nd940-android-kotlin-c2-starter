@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Radar asteroidov</string>
+
+    <string name="next_week_asteroids">Asteroidy týždňa</string>
+    <string name="today_asteroids">Asteroidy dneška</string>
+    <string name="close_approach_data_title">Dátum blízkeho priblíženia</string>
+    <string name="absolute_magnitude_title">Absolútna veľkosť</string>
+    <string name="estimated_diameter_title">Odhadovaný priemer</string>
+    <string name="relative_velocity_title">Relatívna rýchlosť</string>
+    <string name="distance_from_earth_title">Vzdialenosť od zeme</string>
+    <string name="astronomical_unit_format">%f au</string>
+    <string name="km_unit_format">%f km</string>
+    <string name="km_s_unit_format">%f km/s</string>
+    <string name="image_of_the_day">Obrázok dňa</string>
+    <string name="astronomica_unit_explanation">Astronomická jednotka (au) je jednotka dĺžky, približne vzdialenosť od Zeme k Slnku a rovná sa približne 150 miliónom kilometrov (93 miliónov míľ)</string>
+    <string name="astronomical_unit_explanation_button">Definícia astronomickej jednotky</string>
+    <string name="potentially_hazardous_asteroid_image">Obrázok potenciálne nebezpečného asteroidu</string>
+    <string name="not_hazardous_asteroid_image">Obrázok bezpečného asteroidu</string>
+    <string name="this_is_nasa_s_picture_of_day_showing_nothing_yet">Toto je obrázok dňa NASA, ktorý zatiaľ nič neukazuje</string>
+    <string name="nasa_picture_of_day_content_description_format">Obrázok dňa NASA: %s</string>
+    <string name="asteroid_name">Meno asteroidu</string>
+    <string name="asteroid_approach_date">Dátum priblíženia</string>
+    <string name="status_normal">Normálny asteroid</string>
+    <string name="status_potentially_hazardous">Potenciálne nebezpečný asteroid</string>
+    <string name="image_of_non_hazardous_asteroid">Obrázok bezpečného asteroidu</string>
+    <string name="image_of_hazardous_asteroid">Obrázok potenciálne nebezpečného asteroidu</string>
+    <string name="info_icon">Informačná inkonka</string>
+    <string name="network_error">Sieťová chyba</string>
+    <string name="estimated_diameter_default_text">0.82 km</string>
+    <string name="relative_velocity_default_text">11.9 km/s</string>
+    <string name="distance_from_earth_default_value">0.0924 au</string>
+    <string name="absolute_magnitude_default_value">25.126 au</string>
+    <string name="close_approach_date_default_value">2020-02-01</string>
+</resources>
